@@ -80,7 +80,6 @@ describe( `${ block.name } Block (frontend)`, () => {
 	} );
 
 	it( 'allows customer to have different shipping and billing addresses', async () => {
-		await shopper.goToCheckoutBlock();
 		await page.goto( productPermalink );
 		await shopper.addToCart();
 		await shopper.goToCheckoutBlock();
