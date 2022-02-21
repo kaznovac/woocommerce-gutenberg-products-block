@@ -40,12 +40,7 @@ describe( `${ block.name } Block (frontend)`, () => {
 
 	beforeAll( async () => {
 		// prevent CartCheckoutCompatibilityNotice from appearing
-		await page.evaluate( () => {
-			localStorage.setItem(
-				'wc-blocks_dismissed_compatibility_notices',
-				'["checkout"]'
-			);
-		} );
+		await merchant.preventCompatibilityNotice();
 		await merchant.login();
 
 		// Display all address fields.
@@ -72,11 +67,7 @@ describe( `${ block.name } Block (frontend)`, () => {
 		// empty cart from shortcode page
 		await shopper.goToCart();
 		await shopper.removeFromCart( simpleProductName );
-		await page.evaluate( () => {
-			localStorage.removeItem(
-				'wc-blocks_dismissed_compatibility_notices'
-			);
-		} );
+		await merchant.reactivateCompatibilityNotice();
 	} );
 
 	it( 'allows customer to have different shipping and billing addresses', async () => {
