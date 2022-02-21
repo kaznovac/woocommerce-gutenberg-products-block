@@ -2,7 +2,7 @@
 namespace Automattic\WooCommerce\Blocks\StoreApi\Routes;
 
 use Automattic\WooCommerce\Blocks\StoreApi\Schemas\AbstractSchema;
-use Automattic\WooCommerce\Blocks\StoreApi\Utilities\InvalidStockLevelsInCartException;
+use Automattic\WooCommerce\Blocks\StoreApi\Utilities\InvalidCartException;
 use WP_Error;
 
 /**
@@ -71,7 +71,7 @@ abstract class AbstractRoute implements RouteInterface {
 			}
 		} catch ( RouteException $error ) {
 			$response = $this->get_route_error_response( $error->getErrorCode(), $error->getMessage(), $error->getCode(), $error->getAdditionalData() );
-		} catch ( InvalidStockLevelsInCartException $error ) {
+		} catch ( InvalidCartException $error ) {
 			$response = $this->get_route_error_response_from_object( $error->getError(), $error->getCode(), $error->getAdditionalData() );
 		} catch ( \Exception $error ) {
 			$response = $this->get_route_error_response( 'unknown_server_error', $error->getMessage(), 500 );
