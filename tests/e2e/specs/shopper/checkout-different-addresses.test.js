@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	merchant,
 	openDocumentSettingsSidebar,
 	uiUnblocked,
 } from '@woocommerce/e2e-utils';
@@ -18,6 +17,7 @@ import {
  */
 import {
 	getNormalPagePermalink,
+	merchant,
 	shopper,
 	visitPostOfType,
 } from '../../../utils';
