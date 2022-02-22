@@ -331,6 +331,23 @@ const Shipping = () => [
 			},
 		],
 	},
+	{
+		name: 'US',
+		locations: [
+			{
+				code: 'US',
+			},
+		],
+		methods: [
+			{
+				method_id: 'free_shipping',
+				settings: {
+					title: 'Free Shipping',
+					cost: '00.00',
+				},
+			},
+		],
+	},
 ];
 
 /**
