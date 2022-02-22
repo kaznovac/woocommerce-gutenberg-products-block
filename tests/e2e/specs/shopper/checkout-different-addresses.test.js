@@ -25,28 +25,25 @@ import {
 } from '../../../utils';
 
 const config = require( 'config' );
-
-const block = {
-	name: 'Checkout',
-};
-
+const block = { name: 'Checkout' };
 const simpleProductName = '128GB USB Stick';
-const pageName = 'Checkout Block';
+const shippingDetails = config.get( 'addresses.customer.shipping' );
+const billingDetails = config.get( 'addresses.customer.billing' );
 
 if ( process.env.WOOCOMMERCE_BLOCKS_PHASE < 2 )
 	// eslint-disable-next-line jest/no-focused-tests
 	test.only( `skipping ${ block.name } tests`, () => {} );
 
-describe( `${ block.name } Block (frontend)`, () => {
+describe( 'Shopper → Checkout → Can have different shipping and billing addresses', () => {
 	let productPermalink;
 
 	beforeAll( async () => {
 		// prevent CartCheckoutCompatibilityNotice from appearing
-		await merchant.preventCompatibilityNotice();
+		await preventCompatibilityNotice();
 		await merchant.login();
 
-		// Display all address fields.
-		await visitBlockPage( pageName );
+		// Activate all address fields.
+		await visitBlockPage( 'Checkout Block' );
 		await openDocumentSettingsSidebar();
 		await selectBlockByName(
 			'woocommerce/checkout-shipping-address-block'
@@ -69,7 +66,25 @@ describe( `${ block.name } Block (frontend)`, () => {
 		// empty cart from shortcode page
 		await shopper.goToCart();
 		await shopper.removeFromCart( simpleProductName );
-		await merchant.reactivateCompatibilityNotice();
+
+		// prevent CartCheckoutCompatibilityNotice from appearing
+		await preventCompatibilityNotice();
+		await merchant.login();
+
+		// Deactivate all address fields.
+		await visitBlockPage( 'Checkout Block' );
+		await openDocumentSettingsSidebar();
+		await selectBlockByName(
+			'woocommerce/checkout-shipping-address-block'
+		);
+		await expect( page ).toClick( 'label', { text: 'Company' } );
+		await expect( page ).toClick( 'label', {
+			text: 'Apartment, suite, etc.',
+		} );
+		await expect( page ).toClick( 'label', { text: 'Phone' } );
+		await saveOrPublish();
+		await merchant.logout();
+		await reactivateCompatibilityNotice();
 	} );
 
 	it( 'allows customer to have different shipping and billing addresses', async () => {
