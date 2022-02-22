@@ -111,4 +111,12 @@ export const shopper = {
 		await expect( page ).toMatch( customerShippingDetails.postcode );
 		await expect( page ).toMatch( customerShippingDetails.phone );
 	}
+
+	goToBlockPage: async ( title ) => {
+		await page.goto( await getBlockPagePermalink( title ), {
+			waitUntil: 'networkidle0',
+		} );
+
+		await expect( page ).toMatchElement( 'h1', { text: title } );
+	},
 };
