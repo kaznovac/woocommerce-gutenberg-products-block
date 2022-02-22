@@ -47,6 +47,14 @@ export const shopper = {
 		);
 	},
 
+	placeOrder: async () => {
+		await expect( page ).toClick( '.wc-block-components-button__text', {
+			text: 'Place Order',
+		} );
+		page.waitForNavigation( {
+			waitUntil: 'networkidle0',
+		} );
+	},
 	fillBillingDetails: async ( customerBillingDetails ) => {
 		await expect( page ).toFill(
 			'#billing-first_name',
