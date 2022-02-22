@@ -101,8 +101,11 @@ describe( 'Shopper → Checkout → Can have different shipping and billing addr
 			}
 		} );
 		await uiUnblocked();
-		await shopper.fillShippingDetails(
-			config.get( 'addresses.customer.shipping' )
-		);
+		await shopper.fillShippingDetails( shippingDetails );
+		await shopper.fillBillingDetails( billingDetails );
+		await shopper.placeOrder();
+		await page.waitForTimeout( 1000 );
+		await shopper.verifyShippingDetails( shippingDetails );
+		await shopper.verifyBillingDetails( billingDetails );
 	} );
 } );
