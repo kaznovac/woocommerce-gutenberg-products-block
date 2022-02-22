@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	merchant,
 	openDocumentSettingsSidebar,
 	uiUnblocked,
 } from '@woocommerce/e2e-utils';
@@ -17,9 +18,10 @@ import {
  */
 import {
 	getNormalPagePermalink,
-	merchant,
 	shopper,
 	visitPostOfType,
+	preventCompatibilityNotice,
+	reactivateCompatibilityNotice,
 } from '../../../utils';
 
 const config = require( 'config' );
