@@ -110,7 +110,7 @@ export const shopper = {
 		await expect( page ).toMatch( customerShippingDetails.state );
 		await expect( page ).toMatch( customerShippingDetails.postcode );
 		await expect( page ).toMatch( customerShippingDetails.phone );
-	}
+	},
 
 	goToBlockPage: async ( title ) => {
 		await page.goto( await getBlockPagePermalink( title ), {
